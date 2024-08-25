@@ -2,7 +2,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import cors from 'cors';
-import 'dotenv/config'
+import 'dotenv/config';
 
 import { findArticlesByTopic } from './gpt';
 
@@ -21,25 +21,27 @@ app.use(limiter);
 
 app.get('/articles', async (req, res) => {
   try {
-    const { topic } = req.query;
+    const { topic, page } = req.query;
 
     if (typeof topic !== 'string') {
       return res.status(400).json({ error: 'Invalid topic parameter' });
     }
     if (!topic.length) {
-      return res.status(200).json({ topic, articles: [] });
+      return res.status(200).json({ topic, articles: [], totalPages: 1 });
     }
 
-    const articles = await findArticlesByTopic(topic)
+    const pageNumber = parseInt(page as string, 10) || 1;
 
-    res.status(200).json({ topic, articles });
+    const articles = await findArticlesByTopic(topic, pageNumber);
+
+    res.status(200).json({ topic, articles, totalPages: 10 });
   } catch (error) {
     console.error('Error handling request:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+app.use((err: any, req: Request, res: Response) => {
   console.error('Unhandled error:', err);
   res.status(500).json({ error: 'Something went wrong!' });
 });
