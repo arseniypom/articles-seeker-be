@@ -1,9 +1,10 @@
 import { Request, Response } from 'express';
 import { findArticlesByTopic } from '../gpt';
+import { IArticlesRequestQuery } from '../types/articles';
 
-export const getArticles = async (req: Request, res: Response) => {
+export const getArticles = async (req: Request<{}, {}, {}, IArticlesRequestQuery>, res: Response) => {
   try {
-    const { topic, page } = req.query;
+    const { topic, page, model } = req.query;
 
     if (typeof topic !== 'string') {
       return res.status(400).json({ error: 'Invalid topic parameter' });
@@ -14,7 +15,7 @@ export const getArticles = async (req: Request, res: Response) => {
 
     const pageNumber = parseInt(page as string, 10) || 1;
 
-    const articles = await findArticlesByTopic(topic, pageNumber);
+    const articles = await findArticlesByTopic(topic, pageNumber, model);
 
     res.status(200).json({ topic, articles, totalPages: 10 });
   } catch (error) {
