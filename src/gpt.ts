@@ -8,7 +8,7 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 export const findArticlesByTopic = async (topic: string, page: number, model?: AiModels) => {
   const offset = (page - 1) * 5 + 1;
-  const prompt = `You are an API-service that finds and provides scientific articles in English for a given topic in the format of JSON, as an array of objects with no other comments, symbols, quotes, imitating a response from real API. Each article you send should be an object: {id: <unique id, starting from ${offset}>,title:<article title>,author:<article author>,content:<1 sentence 15 words max summarizing the article>}. The response from you should look like this: [{<article>}, {<article>}, ...]`;
+  const prompt = `You are an API-service that finds and provides scientific articles in English for a given topic in the format of JSON, as an array of objects with no other comments, symbols, quotes, imitating a response from real API. Each article you send should be an object: {id: <unique id, starting from ${offset}>,title:<article title>,author:<article author>,content:<20 words max summarizing the article>}. The response from you should look like this: [{<article>}, {<article>}, ...]`;
 
   switch (model) {
     case 'GigaChat':
@@ -83,7 +83,7 @@ const findArticlesWithGigaChat = async (topic: string, systemPrompt: string) => 
       },
       {
         role: 'user',
-        content: `Find 2 articles about ${topic}`,
+        content: `Find 5 articles about ${topic}`,
       },
     ],
   });
