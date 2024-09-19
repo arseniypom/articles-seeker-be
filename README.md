@@ -1,6 +1,6 @@
 # Articles Seeker Backend
 
-This is the backend part of the Articles Seeker application, a service that provides scientific articles based on a given topic. It uses OpenAI's API to fetch relevant articles and is designed to be secure, efficient, and easy to use. The frontend part of the application is deployed on Vercel, and the backend is built using Express, TypeScript, and other modern web technologies.
+This is the backend part of the Articles Seeker application, a service that provides scientific articles based on a given topic. It uses OpenAI's API to fetch relevant articles and is designed to be secure, efficient, and easy to use. It is built using Express, TypeScript, and other modern web technologies.
 
 ## Table of Contents
 
@@ -100,7 +100,6 @@ This backend service is intended to be deployed on a Node.js server. You can use
 
 ## Links
 
-- **Frontend Deployment**: [Articles Seeker Frontend](https://articles-seeker-fe.vercel.app/)
 - **Frontend Repository**: [GitHub - articles-seeker-fe](https://github.com/arseniypom/articles-seeker-fe)
 
 ## License
